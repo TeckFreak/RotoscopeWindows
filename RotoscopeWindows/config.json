@@ -1,0 +1,43 @@
+{
+  "mainImage": "Assets/Images/template.png",
+  "touchPoints": [
+    {
+      "position": {
+        "x": 6300,
+        "y": 810
+      },
+      "file": "assets/videos/video.mp4"
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "file": ""
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "file": ""
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "file": ""
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "file": ""
+    }
+  ],
+  "totalCM": 315,
+  "port": "COM6",
+  "errorCM": 2
+}
