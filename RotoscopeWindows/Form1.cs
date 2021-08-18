@@ -155,7 +155,7 @@ namespace RotoscopeWindows
             {
                 mainImage.Invoke((MethodInvoker)(() =>
                 {
-                    Transition.run(mainImage, "Left", moveTo, new TransitionType_Linear(100));
+                    Transition.run(mainImage, "Left", moveTo, new TransitionType_Linear(appConfig.TransitionSpeed));
                     mainImage.SendToBack();
                 }));
             }

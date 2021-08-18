@@ -20,5 +20,6 @@
   ],
   "totalCM": 315,
   "port": "COM6",
-  "errorCM": 0
+  "errorCM": 0,
+  "tSpeed": 150
 }

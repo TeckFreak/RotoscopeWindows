@@ -24,6 +24,9 @@ namespace RotoscopeWindows
         
         [JsonProperty("errorCM")]
         public int ErrorCM { get; set; }
+
+        [JsonProperty("tSpeed")]
+        public int TransitionSpeed { get; set; }
     }
 
     public partial class TouchPoint
