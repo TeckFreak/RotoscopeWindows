@@ -31,16 +31,19 @@ namespace RotoscopeWindows
         [JsonProperty("position")]
         public Position Position { get; set; }
 
-        [JsonProperty("file")]
-        public string File { get; set; }
+        [JsonProperty("fileH")]
+        public string FileH { get; set; }
+        
+        [JsonProperty("fileE")]
+        public string FileE { get; set; }
     }
 
     public partial class Position
     {
         [JsonProperty("x")]
-        public long X { get; set; }
+        public int X { get; set; }
 
         [JsonProperty("y")]
-        public long Y { get; set; }
+        public int Y { get; set; }
     }
 }

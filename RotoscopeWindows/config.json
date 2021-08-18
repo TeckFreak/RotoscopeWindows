@@ -3,41 +3,22 @@
   "touchPoints": [
     {
       "position": {
-        "x": 6300,
-        "y": 810
+        "x": 870,
+        "y": 540
       },
-      "file": "assets/videos/video.mp4"
+      "fileH": "Assets\\Videos\\video.mp4",
+      "fileE": "Assets\\Videos\\video.mp4"
     },
     {
       "position": {
-        "x": 0,
-        "y": 0
+        "x": 2790,
+        "y": 540
       },
-      "file": ""
-    },
-    {
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "file": ""
-    },
-    {
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "file": ""
-    },
-    {
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "file": ""
+      "fileH": "Assets\\Videos\\video.mp4",
+      "fileE": "Assets\\Videos\\video.mp4"
     }
   ],
   "totalCM": 315,
   "port": "COM6",
-  "errorCM": 2
+  "errorCM": 0
 }
