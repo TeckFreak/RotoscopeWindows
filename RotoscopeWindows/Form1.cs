@@ -21,7 +21,6 @@ namespace RotoscopeWindows
         private AppConfig appConfig;
         private Image image;
         private int lastDistance = 0;
-        private List<Button> buttons = new List<Button>();
 
         public Form1()
         {
@@ -29,6 +28,7 @@ namespace RotoscopeWindows
 
             LoadConfig();
             LoadImage();
+            LoadButtons();
             InitSerialConnection();
         }
 
@@ -69,7 +69,7 @@ namespace RotoscopeWindows
                 string data = (sender as SerialPort).ReadLine();
                 int distance = Convert.ToInt32(data);
 
-                if(distance > lastDistance + appConfig.ErrorCM || distance < lastDistance - appConfig.ErrorCM)
+                if((distance > lastDistance + appConfig.ErrorCM || distance < lastDistance - appConfig.ErrorCM) && distance <= appConfig.TotalCM)
                 {
                     MoveImage(distance);
                     lastDistance = distance;
@@ -84,8 +84,67 @@ namespace RotoscopeWindows
         private void LoadImage()
         {
             image = Image.FromFile(appConfig.MainImage);
+            
             mainImage.Width = image.Width;
             mainImage.Image = image;
+
+            this.Width = image.Width;
+        }
+
+        private void LoadButtons()
+        {
+            int i = 0;
+            foreach (TouchPoint touchPoint in appConfig.TouchPoints)
+            {
+                Button btnHindi = new Button()
+                {
+                    Text = "Hindi",
+                    Height = 40,
+                    Width = 80,
+                    BackColor = Color.Gray,
+                    FlatStyle = FlatStyle.Flat,
+                    Location = new Point(touchPoint.Position.X, touchPoint.Position.Y),
+                    Name = "bH_" + i
+                };
+
+                Button btnEnglish = new Button()
+                {
+                    Text = "English",
+                    Height = 40,
+                    Width = 80,
+                    BackColor = Color.Gray,
+                    FlatStyle = FlatStyle.Flat,
+                    Location = new Point(touchPoint.Position.X + 90, touchPoint.Position.Y),
+                    Name = "bE_" + i,
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+
+                btnHindi.Click += BtnPlay_Click;
+                btnEnglish.Click += BtnPlay_Click;
+
+                mainImage.Controls.Add(btnHindi);
+                mainImage.Controls.Add(btnEnglish);
+            }
+        }
+
+        private void BtnPlay_Click(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            int index = Convert.ToInt32(button.Name.Split('_')[1]);
+
+            PlayVideo(index, button.Name.StartsWith("bH")); 
+        }
+
+        private void PlayVideo(int index, bool isHindi)
+        {
+            if(isHindi)
+            {
+                new VideoPlayer(appConfig.TouchPoints[index].FileH);
+            }
+            else
+            {
+                new VideoPlayer(appConfig.TouchPoints[index].FileE);
+            }
         }
 
         private void MoveImage(int distance)
@@ -96,8 +155,8 @@ namespace RotoscopeWindows
             {
                 mainImage.Invoke((MethodInvoker)(() =>
                 {
-                    Transition.run(mainImage, "Left", moveTo, new TransitionType_Linear(20));
-                    // mainImage.Location = new Point(moveTo, 0);
+                    Transition.run(mainImage, "Left", moveTo, new TransitionType_Linear(100));
+                    mainImage.SendToBack();
                 }));
             }
         }

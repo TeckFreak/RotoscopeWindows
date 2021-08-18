@@ -29,6 +29,7 @@ namespace RotoscopeWindows
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.mainImage = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.mainImage)).BeginInit();
             this.SuspendLayout();
@@ -38,6 +39,7 @@ namespace RotoscopeWindows
             this.mainImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.mainImage.BackColor = System.Drawing.Color.Transparent;
+            this.mainImage.Image = ((System.Drawing.Image)(resources.GetObject("mainImage.Image")));
             this.mainImage.Location = new System.Drawing.Point(0, 0);
             this.mainImage.Margin = new System.Windows.Forms.Padding(0);
             this.mainImage.Name = "mainImage";
