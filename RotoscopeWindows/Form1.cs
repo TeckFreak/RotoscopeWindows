@@ -69,6 +69,19 @@ namespace RotoscopeWindows
                 string data = (sender as SerialPort).ReadLine();
                 int distance = Convert.ToInt32(data);
 
+                if(distance < 0)
+                {
+                    distance = appConfig.TotalCM;
+                }
+                else if(distance > appConfig.TotalCM)
+                {
+                    distance = 0;
+                }
+                else
+                {
+                    distance = appConfig.TotalCM - distance;
+                }
+
                 if((distance > lastDistance + appConfig.ErrorCM || distance < lastDistance - appConfig.ErrorCM) && distance <= appConfig.TotalCM)
                 {
                     MoveImage(distance);
