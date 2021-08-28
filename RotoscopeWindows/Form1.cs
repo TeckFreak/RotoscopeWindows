@@ -137,6 +137,8 @@ namespace RotoscopeWindows
 
                 mainImage.Controls.Add(btnHindi);
                 mainImage.Controls.Add(btnEnglish);
+
+                i++;
             }
         }
 
