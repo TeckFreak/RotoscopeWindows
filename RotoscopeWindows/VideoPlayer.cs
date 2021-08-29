@@ -17,7 +17,12 @@ namespace RotoscopeWindows
     {
         private MediaPlayer mediaPlayer;
 
-        public VideoPlayer(string videoPath)
+        public string CallerControlName
+        {
+            get; set;
+        }
+
+        public VideoPlayer(string videoPath, string callerName)
         {
             InitializeComponent();
 
@@ -27,7 +32,9 @@ namespace RotoscopeWindows
 
             this.FormClosed += VideoPlayer_FormClosed;
 
-            this.ShowDialog();
+            this.CallerControlName = callerName;
+            this.TopMost = true;
+            this.Show();
         }
 
         private void VideoPlayer_FormClosed(object sender, FormClosedEventArgs e)

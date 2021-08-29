@@ -21,6 +21,7 @@ namespace RotoscopeWindows
         private AppConfig appConfig;
         private Image image;
         private int lastDistance = 0;
+        private VideoPlayer player = null;
 
         public Form1()
         {
@@ -29,7 +30,7 @@ namespace RotoscopeWindows
             LoadConfig();
             LoadImage();
             LoadButtons();
-            InitSerialConnection();
+            //InitSerialConnection();
         }
 
         protected override CreateParams CreateParams
@@ -111,23 +112,25 @@ namespace RotoscopeWindows
             {
                 Button btnHindi = new Button()
                 {
-                    Text = "Hindi",
-                    Height = 40,
-                    Width = 80,
-                    BackColor = Color.Gray,
+                    Text = "",
+                    Height = 60,
+                    Width = 160,
+                    BackgroundImage = Image.FromFile("Hindi.png"),
                     FlatStyle = FlatStyle.Flat,
+                    BackgroundImageLayout = ImageLayout.Stretch,
                     Location = new Point(touchPoint.Position.X, touchPoint.Position.Y),
                     Name = "bH_" + i
                 };
 
                 Button btnEnglish = new Button()
                 {
-                    Text = "English",
-                    Height = 40,
-                    Width = 80,
-                    BackColor = Color.Gray,
+                    Text = "",
+                    Height = 60,
+                    Width = 160,
+                    BackgroundImage = Image.FromFile("English.png"),
                     FlatStyle = FlatStyle.Flat,
-                    Location = new Point(touchPoint.Position.X + 90, touchPoint.Position.Y),
+                    BackgroundImageLayout = ImageLayout.Stretch,
+                    Location = new Point(touchPoint.Position.X + 180, touchPoint.Position.Y),
                     Name = "bE_" + i,
                     TextAlign = ContentAlignment.MiddleCenter
                 };
@@ -147,18 +150,18 @@ namespace RotoscopeWindows
             Button button = sender as Button;
             int index = Convert.ToInt32(button.Name.Split('_')[1]);
 
-            PlayVideo(index, button.Name.StartsWith("bH")); 
+            PlayVideo(index, button.Name.StartsWith("bH"), button.Name); 
         }
 
-        private void PlayVideo(int index, bool isHindi)
+        private void PlayVideo(int index, bool isHindi, string callerName)
         {
             if(isHindi)
             {
-                new VideoPlayer(appConfig.TouchPoints[index].FileH);
+                player = new VideoPlayer(appConfig.TouchPoints[index].FileH, callerName);
             }
             else
             {
-                new VideoPlayer(appConfig.TouchPoints[index].FileE);
+                player = new VideoPlayer(appConfig.TouchPoints[index].FileE, callerName);
             }
         }
 
@@ -172,6 +175,18 @@ namespace RotoscopeWindows
                 {
                     Transition.run(mainImage, "Left", moveTo, new TransitionType_Linear(appConfig.TransitionSpeed));
                     mainImage.SendToBack();
+
+                    // Check if video is playing and close it if button is out of bounds of screen.
+                    if(player != null)
+                    {
+                        Button btn = mainImage.Controls.Find(player.CallerControlName, true)[0] as Button;
+
+                        if(moveTo + btn.Location.X < 0 || moveTo + btn.Location.X + btn.Width > 1920)
+                        {
+                            player.Close();
+                            player = null;
+                        }
+                    }
                 }));
             }
         }
