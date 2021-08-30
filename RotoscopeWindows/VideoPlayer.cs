@@ -40,6 +40,7 @@ namespace RotoscopeWindows
         {
             try
             {
+                this.Hide();
                 mediaPlayer.Stop();
                 this.Close();
             }
