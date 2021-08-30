@@ -29,17 +29,24 @@ namespace RotoscopeWindows
             PlayVideo(videoPath);
 
             this.WindowState = FormWindowState.Maximized;
-
-            this.FormClosed += VideoPlayer_FormClosed;
+            this.FormBorderStyle = FormBorderStyle.None;
 
             this.CallerControlName = callerName;
             this.TopMost = true;
             this.Show();
         }
 
-        private void VideoPlayer_FormClosed(object sender, FormClosedEventArgs e)
+        public void StopAndClose()
         {
-            mediaPlayer.Stop();
+            try
+            {
+                mediaPlayer.Stop();
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         private void PlayVideo(string videoPath)

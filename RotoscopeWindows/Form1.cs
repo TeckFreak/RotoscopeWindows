@@ -30,7 +30,7 @@ namespace RotoscopeWindows
             LoadConfig();
             LoadImage();
             LoadButtons();
-            //InitSerialConnection();
+            InitSerialConnection();
         }
 
         protected override CreateParams CreateParams
@@ -175,16 +175,26 @@ namespace RotoscopeWindows
                 {
                     Transition.run(mainImage, "Left", moveTo, new TransitionType_Linear(appConfig.TransitionSpeed));
                     mainImage.SendToBack();
+                }));
 
+                this.Invoke((MethodInvoker)(() =>
+                {
                     // Check if video is playing and close it if button is out of bounds of screen.
-                    if(player != null)
+                    if (player != null)
                     {
                         Button btn = mainImage.Controls.Find(player.CallerControlName, true)[0] as Button;
 
-                        if(moveTo + btn.Location.X < 0 || moveTo + btn.Location.X + btn.Width > 1920)
+                        if (moveTo + btn.Location.X < 0 || moveTo + btn.Location.X + btn.Width > 1920)
                         {
-                            player.Close();
-                            player = null;
+                            try
+                            {
+                                player.StopAndClose();
+                                player = null;
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, "Error");
+                            }
                         }
                     }
                 }));
